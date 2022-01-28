@@ -3,6 +3,8 @@
 
 #include "BulletController.h"
 #include "Components/BoxComponent.h"
+#include "EnemyController.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 ABulletController::ABulletController()
@@ -11,7 +13,9 @@ ABulletController::ABulletController()
 	PrimaryActorTick.bCanEverTick = true;
 
 	RootBox = CreateDefaultSubobject<UBoxComponent>(TEXT("Root"));
-
+	RootBox->SetGenerateOverlapEvents(true);
+	RootBox->OnComponentBeginOverlap.AddDynamic(this, &
+		ABulletController::OnOverlap);
 }
 
 // Called when the game starts or when spawned
@@ -30,9 +34,20 @@ void ABulletController::Tick(float DeltaTime)
 	NewLocation.X += Speed * DeltaTime;
 	SetActorLocation(NewLocation);
 
-	if (NewLocation.X > 600.0f)
+	if (NewLocation.X < -600.0f)
 	{
 		this->Destroy();
+	}
+}
+
+void ABulletController::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor
+	* OtherActor, UPrimitiveComponent* OtherComponent, int32
+	OtheBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	if (OtherActor->IsA(AEnemyController::StaticClass()))
+	{
+		this->Destroy();
+		OtherActor->Destroy();
 	}
 }
 

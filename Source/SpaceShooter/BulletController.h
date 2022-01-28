@@ -30,4 +30,8 @@ public:
 	UPROPERTY(EditAnywhere)
 	float Speed = 400.0f;
 
+	UFUNCTION()
+	void OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor
+	* OtherActor, UPrimitiveComponent* OtherComponent, int32
+	OtheBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 };
