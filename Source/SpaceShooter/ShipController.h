@@ -42,4 +42,11 @@ public:
 	void OnShoot();
 
 	FVector CurrentVelocity;
+
+	bool Died;
+
+	UFUNCTION()
+	void OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor
+	* OtherActor, UPrimitiveComponent* OtherComponent, int32
+	OtheBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 };
