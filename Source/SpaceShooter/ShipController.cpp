@@ -15,9 +15,7 @@ AShipController::AShipController()
 	CollisionBox = 
 		CreateDefaultSubobject<UBoxComponent>(TEXT("Root"));
 	CollisionBox->SetGenerateOverlapEvents(true);
-	CollisionBox->OnComponentBeginOverlap.AddDynamic(this, & 
-		AShipController::OnOverlap);
-
+	
 	AutoPossessPlayer = EAutoReceiveInput::Player0;
 }
 
@@ -25,7 +23,9 @@ AShipController::AShipController()
 void AShipController::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
+	CollisionBox->OnComponentBeginOverlap.AddDynamic(this, &
+	AShipController::OnOverlap);
 }
 
 // Called every frame
