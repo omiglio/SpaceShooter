@@ -22,10 +22,13 @@ AShipController::AShipController()
 // Called when the game starts or when spawned
 void AShipController::BeginPlay()
 {
+	CollisionBox->OnComponentBeginOverlap.AddDynamic(this, &
+		AShipController::OnOverlap);
+
 	Super::BeginPlay();
 
-	CollisionBox->OnComponentBeginOverlap.AddDynamic(this, &
-	AShipController::OnOverlap);
+	
+	
 }
 
 // Called every frame
