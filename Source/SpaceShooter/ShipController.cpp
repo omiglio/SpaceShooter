@@ -51,6 +51,8 @@ void AShipController::SetupPlayerInputComponent(UInputComponent* PlayerInputComp
 	InputComponent->BindAxis("MoveY", this, 
 		&AShipController::Move_YAxis);
 	InputComponent->BindAction("Shoot", IE_Pressed, this, &AShipController::OnShoot);
+	InputComponent->BindAction("ReStart", IE_Pressed, this, &
+		AShipController::OnRestart).bExecuteWhenPaused = true;
 }
 
 void AShipController::Move_XAxis(float AxisValue)
@@ -89,4 +91,11 @@ OtheBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 	}
 }
 
-
+void AShipController::OnRestart()
+{
+	if (Died)
+	{
+		UGameplayStatics::OpenLevel(this, FName(*GetWorld()->
+			GetName()), false);
+	}
+}
