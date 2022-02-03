@@ -29,6 +29,9 @@ public:
 	float EnemyTimer;
 	float GameTimer;
 
+	void IncrementScore();
+	void OnGameOver();
+
 	UFUNCTION(BlueprintCallable, Category = "UMG Game")
 	void ChangeMenuWidget(TSubclassOf<UUserWidget> NewWidgetClass);
 

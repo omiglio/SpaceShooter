@@ -5,6 +5,7 @@
 #include "BulletController.h"
 #include "EnemyController.h"
 #include "Kismet/GameplayStatics.h"
+#include "SpaceShooterGameMode.h"
 
 // Sets default values
 AShipController::AShipController()
@@ -86,6 +87,9 @@ OtheBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 		Died = true;
 
 		this->SetActorHiddenInGame(true);
+
+		((ASpaceShooterGameMode*)GetWorld()->GetAuthGameMode())->
+			OnGameOver();
 
 		UGameplayStatics::SetGamePaused(GetWorld(), true);
 	}

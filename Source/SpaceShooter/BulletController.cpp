@@ -5,6 +5,7 @@
 #include "Components/BoxComponent.h"
 #include "EnemyController.h"
 #include "Kismet/GameplayStatics.h"
+#include "SpaceShooterGameMode.h"
 
 // Sets default values
 ABulletController::ABulletController()
@@ -22,7 +23,6 @@ ABulletController::ABulletController()
 void ABulletController::BeginPlay()
 {
 	Super::BeginPlay();
-	
 }
 
 // Called every frame
@@ -37,6 +37,9 @@ void ABulletController::Tick(float DeltaTime)
 	if (NewLocation.X < -600.0f)
 	{
 		this->Destroy();
+
+		((ASpaceShooterGameMode*)GetWorld()->GetAuthGameMode())->
+			IncrementScore();
 	}
 }
 

@@ -59,8 +59,17 @@ void ASpaceShooterGameMode::ChangeMenuWidget(TSubclassOf<
 			CurrentWidget->AddToViewport();
 		}
 	}
+}
 
+void ASpaceShooterGameMode::IncrementScore()
+{
+	Score += 100;
+	((UGameWidget*)CurrentWidget)->SetScore(Score);
+}
 
+void ASpaceShooterGameMode::OnGameOver()
+{
+	((UGameWidget*)CurrentWidget)->OnGameOver(Score);
 }
 
 
