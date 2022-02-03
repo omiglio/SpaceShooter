@@ -3,10 +3,15 @@
 
 #include "SpaceShooterGameMode.h"
 #include "EnemyController.h"
+#include "GameWidget.h"
 
 void ASpaceShooterGameMode::BeginPlay()
 {
 	Super::BeginPlay();
+
+	ChangeMenuWidget(StartingWidgetClass); 
+
+	((UGameWidget*)CurrentWidget)->Load();
 }
 
 void ASpaceShooterGameMode::Tick(float DeltaTime)
@@ -34,4 +39,28 @@ void ASpaceShooterGameMode::Tick(float DeltaTime)
 		}
 	}
 }
+
+void ASpaceShooterGameMode::ChangeMenuWidget(TSubclassOf<
+	UUserWidget> NewWidgetClass)
+{
+	if (CurrentWidget != nullptr)
+	{ 
+		CurrentWidget->RemoveFromViewport();
+		CurrentWidget = nullptr;
+	}
+
+	if (NewWidgetClass != nullptr)
+	{
+		CurrentWidget = CreateWidget<UUserWidget>(GetWorld(),
+			NewWidgetClass);
+
+		if (CurrentWidget != nullptr)
+		{
+			CurrentWidget->AddToViewport();
+		}
+	}
+
+
+}
+
 
